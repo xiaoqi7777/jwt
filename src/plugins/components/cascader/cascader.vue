@@ -1,6 +1,6 @@
 <template>
   <div v-click-outside="close">
-    parent
+    多级联动组件
     <div class="top" @click="btn">
       {{rs}}
     </div>

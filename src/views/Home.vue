@@ -1,19 +1,26 @@
 <template>
   <div class="home">
     首页111111111
-    <!-- <router-link to="/parent">跳转parent</router-link> -->
-    <!-- home-user->{{this.$store.state.username}} -->
+    <button @click="btn">提示(message用法)</button>
+    <button @click="btn1">警告(message用法)</button>
   </div>
 </template>
 
 <script>
-// import { getTest } from '../api/index'
-// @ is an alias to /src
 
 export default {
   name: 'home',
-  async mounted () {
-    // let rs = await getTest()
+  methods: {
+    btn () {
+      this.$Message.info({
+        data: 1
+      })
+    },
+    btn1 () {
+      this.$Message.warn({
+        data: 1
+      })
+    }
   }
 }
 </script>
