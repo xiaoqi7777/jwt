@@ -4,6 +4,7 @@ import Message from './views/message.vue'
 import Home from './views/home.vue'
 import Form from './views/form.vue'
 import Cascader from './views/cascader.vue'
+import DatePicker from './views/datePicker.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({ // 默认导出 首页和404页面
       path: '/message',
       name: 'message',
       component: Message
+    },
+    {
+      path: '/datePicker',
+      name: 'datePicker',
+      component: DatePicker
     },
     {
       path: '*',

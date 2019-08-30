@@ -6,7 +6,6 @@ let getInstance = () => {
   }).$mount('')
   document.body.appendChild(vm.$el)
   let children = vm.$children[0]
-  console.log('========', children)
   return {
     add (options) {
       children.add(options)
@@ -18,16 +17,17 @@ let getInstance = () => {
 let instance
 let getInit = () => {
   instance = instance || getInstance()
-   return instance
+  return instance
 }
 
-const Message = {
-  info (options) {
-    getInit().add(options)
-  },
-  wran (options) {
-    getInit().add(options)
+function Message (options) {
+  switch (options.type) {
+    case 'info':
+      getInit().add({ ...options, color: 'green' })
+      break
+    case 'warn':
+      getInit().add({ ...options, color: 'red' })
+      break
   }
 }
-
 export { Message }

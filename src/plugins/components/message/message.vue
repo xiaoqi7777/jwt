@@ -1,7 +1,9 @@
 <template>
-  <div class="message">
-    <div v-for="(message,index) in messages" :key="index">
-        {{message.data}}
+  <div :class="$style.messages">
+    <div :class="$style.layout">
+      <div v-for="(data,index) in messages" :key="index" :class="[$style[data.color],$style.message]">
+          {{data.message}}
+      </div>
     </div>
   </div>
 </template>
@@ -11,17 +13,19 @@ export default {
   data () {
     return {
       messages: [],
-      id: 0
+      id: 0,
+      isRed: null,
+      isGreen: null
     }
+  },
+  computed: {
   },
   methods: {
     add (options) {
-      let data = { ...options }
-      data.id = this.id++
+      let data = { ...options, id: this.id++ }
       this.messages.push(data)
-      // 等2秒后清楚刚才的数据
       data.timer = setTimeout(() => {
-          this.del(data)
+        this.del(data)
       }, 2000)
     },
     del (data) {
@@ -31,6 +35,30 @@ export default {
 }
 </script>
 
-<style>
+<style module lang='scss'>
+.messages{
+  .layout{
+    position: fixed;
+    left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+    .message{
+      border: 1px solid black;
+      width: 300px;
+      height: 150px;
+      line-height: 150px;
+      text-align: center;
+      margin: 10px;
+    }
+    .red{
+      color:red
+    }
+    .green{
+      color:green
+    }
+  }
+}
+</style>
+<style  scoped>
 
 </style>

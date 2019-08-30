@@ -7,6 +7,8 @@
     <router-link to='cascader'>cascader</router-link>
     <br/>
     <router-link to='message'>message</router-link>
+    <br/>
+    <router-link to='datePicker'>datePicker</router-link>
   </div>
 </template>
 
