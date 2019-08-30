@@ -14,8 +14,11 @@ router.beforeEach(async (to, from, next) => {
   if (!store.state.hasPermission) { // 如果没有权限
     // 获取需要添加的路由
     let newRoutes = await store.dispatch('getNewRoute')
+    // next()
+    console.log('to1', to)
     // 动态添加路由
     router.addRoutes(newRoutes)
+    // console.log('to2', to)
     next({ ...to, replace: true })// 保证一定会跳过去
   } else {
     next()

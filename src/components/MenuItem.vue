@@ -1,21 +1,25 @@
 <template>
   <div>
-    <el-submenu  v-if="item.children.length" :index="item.auth">
-      <template slot="title">{{item.name}}</template>
-      <template v-for="(m,i) in item.children">
-          <MenuItem :item="m" :key="i"></MenuItem>
+    <el-submenu v-if="menu.children.length" :index="menu.auth">
+      <template slot="title">{{menu.name}}</template>
+      <template v-for="(item,index) in menu.children">
+        <MenuItem :key='index' :menu='item'></MenuItem>
       </template>
-   </el-submenu>
-    <el-menu-item :index="item.auth">
-      <router-link :to="{name:item.auth}">{{item.name}}</router-link>
+    </el-submenu>
+    <el-menu-item :index="menu.auth">
+      <router-link :to="{name:menu.auth}">{{menu.auth}}-{{menu.name}}</router-link>
     </el-menu-item>
-  </div>
+</div>
+
 </template>
 
 <script>
 export default {
   name: 'MenuItem',
-  props: ['item']
+  props: ['menu'],
+  mounted () {
+    // console.log('menu', this.menu)
+  }
 }
 </script>
 

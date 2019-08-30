@@ -52,3 +52,36 @@ export default new Router({ // 默认导出 首页和404页面
     }
   ]
 })
+
+// export default new Router({
+//   mode:'history',
+//   routes:[
+//     {
+//     path: '/cart',
+//     name: 'cart',
+//     component: () => import('@/views/Cart'),
+//     children: [
+//       {
+//         path: 'cart-list',
+//         name: 'cart-list',
+//         component: () => {
+//           console.log('cart-list')
+//           return import('@/views/CartList')
+//         },
+//         children: [
+//           {
+//             path: 'lottery',
+//             name: 'lottery',
+//             component: () => import('@/views/Lottery')
+//           },
+//           {
+//             path: 'product',
+//             name: 'product',
+//             component: () => import('@/views/Product')
+//           }
+//         ]
+//       }
+//     ]
+//   }
+//   ]
+// })
