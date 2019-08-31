@@ -13,6 +13,7 @@
        </div>
        <div class="pannel-content">
          <div class='days'>
+          <!-- 把周日到周五 -->
            <span
              v-for="j in 7" :key='`_i`+j'
              class="cell"
@@ -52,32 +53,28 @@ export default {
    clickOutside: {// 指令的生命周期
      bind (el, bindings, vnode) {
        // 把事件绑定给document上 看一下点击的是否是当前这个元素
-       let handler = (e) => {
+        let handler = (e) => {
          if (el.contains(e.target)) {
            // 判断一下是否当前面板已经显示出来了
            if (!vnode.context.isVisible) {
              vnode.context.focus()
-             console.log('包含')
            }
          } else {
            if (vnode.context.isVisible) {
              vnode.context.blur()
-             console.log('不包含')
-           }
+           } 
          }
        }
        el.handler = handler
        document.addEventListener('click', handler)
-       console.log(el, bindings, vnode)
-     },
-     unbind () {
-       document.removeEventListener('click')
      }
+    //  unbind () {
+    //    document.removeEventListener('click', handler)
+    //  }
    }
  },
  data () {
    let { year, month } = getYearMonthDay(this.value)
-   month = month + 1
    return {
      weekDays: ['日', '一', '二', '三', '四', '五', '六' ],
      time: { year, month },
@@ -132,14 +129,17 @@ export default {
  computed: {
    visibeDays () {
      // 先获取当前是周几
+     console.log('=======>', this.time.month)
      let { year, month, day } = getYearMonthDay(getDate(this.time.year, this.time.month, 1))
      // 获取当前月份的第一天
      let currentFirstDay = getDate(year, month, 1)
-     // 生成一个 当前 2019 5 18
+     console.log('currentFirstDay', currentFirstDay, month)
+     // 生成一个 当前 2019 8 30
      // 获取当前是周几  把天数往前移动 几天
      let week = currentFirstDay.getDay()
      // 当前开始的天数, 日期格式 和 和 数字相减得到一个毫秒戳
      let startDay = currentFirstDay - week * 60 * 60 * 1000 * 24
+    console.log('week', currentFirstDay, week)
      // 循环42天
      let arr = []
      for (let i = 0; i < 42; i++) {
@@ -150,8 +150,8 @@ export default {
    },
    formatDate () {
      let { year, month, day } = getYearMonthDay(this.value)
-     console.log(year, month, day)
-     this.visibeDays
+    //  console.log(year, month, day)
+    //  this.visibeDays
      // getFullYear getMonth getDate
      return `${year}-${month}-${day}`
    }
