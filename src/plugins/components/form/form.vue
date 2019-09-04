@@ -18,10 +18,9 @@ export default {
     validator (cb) {
       let errorObj = {}
       // 获取检验是否成功
-      let flag = this.$children.every(child => child.validateStatus != 'error')
+      let flag = this.$children.every(child => child.validateStatus !== 'error')
       // 获取formItem校验信息
       let errorData = this.$children.map(children => children.valiStatus).flat()
-      console.log('errorData', errorData)
       for (let i = 0; i < errorData.length; i++) {
         let data = errorData[i]
         let name = data['field']

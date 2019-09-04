@@ -13,12 +13,8 @@ export default {
   data () {
     return {
       messages: [],
-      id: 0,
-      isRed: null,
-      isGreen: null
+      id: 0
     }
-  },
-  computed: {
   },
   methods: {
     add (options) {

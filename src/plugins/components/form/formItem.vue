@@ -1,19 +1,5 @@
 <template>
   <div>
-    formItem
-  </div>
-</template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style><template>
-  <div>
     <label v-if="label">{{label}}</label>
     <slot></slot>
     <div v-if="validateStatus == 'error'">
@@ -108,14 +94,11 @@ export default {
         // 默认配置目前只写required 如果必填 并且没有值，那就出错
         if (rule.required) {
           if (!value) {
-            console.log('required', value, rule.required)
             this.handleAddValidate('required', rule.message)
           } else {
-            console.log('clear required', value, rule.required)
             this.handleDelValidate('required')
           }
         }
-
         // 如果是自定义配置 也就是传入 validator
         if (rule.validator) {
           // validator 就是用户自定义那个函数

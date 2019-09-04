@@ -17,15 +17,15 @@ export default {
   data () {
     const a = (rule, value, cb) => {
       // console.log('value', value)
-      if (value.length == 2) {
-        cb(123)
+      if (value.length === 2) {
+        cb('123')
       } else {
         cb()
       }
     }
     const b = (rule, value, cb) => {
       // console.log('value', value)
-      if (value.length == 2) {
+      if (value.length === 2) {
         cb('嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻')
       } else {
         cb()

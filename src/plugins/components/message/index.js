@@ -4,6 +4,7 @@ let getInstance = () => {
   let vm = new Vue({
     render: (h) => h(MessageComponent)
   }).$mount('')
+  console.log('id')
   document.body.appendChild(vm.$el)
   let children = vm.$children[0]
   return {
