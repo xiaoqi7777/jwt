@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="right" v-if='lists&&lists.length'>
-      <Cchildren :option="lists" @change="change" :value="value" :level='level+1'></Cchildren>
+      <Children :option="lists" @change="change" :value="value" :level='level+1'></Children>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 export default {
-  name: 'Cchildren',
+  name: 'Children',
   data () {
     return {
       // lists: [],

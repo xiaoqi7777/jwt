@@ -68,6 +68,7 @@ export default {
         // }
     },
     change (item) {
+      // item是当前点击的所有数据
       let { id } = item[item.length - 1]
       this.lazyload && this.lazyload(id, (data) => {
         this.handle(id, data)
