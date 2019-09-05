@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <div>
+      <router-link :to="{path:'/'}">h1</router-link>
+      <br/>
+      <router-link :to="{path:'/h2'}">h2</router-link>
+    </div>
     <router-view></router-view>
   </div>
 </template>
