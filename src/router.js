@@ -29,9 +29,17 @@ export default new Router({ // 默认导出 首页和404页面
       component: h2,
       children: [
         {
-          path: '/h3',
+          path: 'h3',
           name: 'h3',
-          component: h3
+          component: h3,
+          children: [
+            {
+              path: 'h4',
+              name: 'h4',
+              component: h4
+
+            }
+          ]
         }
       ]
     }
