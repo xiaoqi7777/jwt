@@ -1,3 +1,5 @@
+// 输入Let\'s take LeetCode contest 输出 s'teL ekat edoCteeL tsetnoc 每个单词转换顺序
+
 // export default (str) => {
 //   let arr = str.split(' ')
 //   // 对数组进行遍历 然后每个元素进行反转
@@ -20,7 +22,7 @@
 // }
 
 export default (str) => {
-  return str.match(/[\w']+/g).map(item => {
-    return item.split('').reverse().join('')
-  }).join(' ')
+    return str.match(/[\w']+/g).map(item => {
+        return item.split('').reverse().join('')
+    }).join(' ')
 }
