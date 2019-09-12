@@ -6,6 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "dev-build": "vue-cli-service serve --mode production ",
+    "test": "vue-cli-service serve --mode test ",
     "dist": "vue-cli-service build --target lib --name Cascader  ./src/plugins/index.js"
   },
   "dependencies": {
