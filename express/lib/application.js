@@ -1,7 +1,8 @@
 let http = require('http')
 let url = require('url')
 // methods=>['get','post']
-// let methods = require('methods')
+let methods = require('methods')
+let slice = Aarry.prototype.slice.call;
 
 // 实现router 和 应用的分离
 let Router = require('./router')
@@ -15,11 +16,19 @@ Application.prototype.lazyrouter = function() {
     this._router = new Router();
   }
 }
+methods.forEach(function(method) {
+  Application.prototype[method] = function(path) {
+    this.lazyrouter();
+    // 这样写可以支持多个处理函数
+    this._router[method].apply(this._router, slice(arguments))
+    return this;
+  }
+})
 // 懒加载
-Application.prototype.get = function(path, handler) {
-  this.lazyrouter();
-  this._router.get(path, handler)
-}
+// Application.prototype.get = function(path, handler) {
+//   this.lazyrouter();
+//   this._router.get(path, handler)
+// }
 Application.prototype.listen = function() {
   let self = this
   let server = http.createServer((req, res) => {

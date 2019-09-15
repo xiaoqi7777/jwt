@@ -1,6 +1,8 @@
 let Route = require('./route')
 let Layer = require('./layer')
 let url = require('url')
+let methods = require('methods')
+let slice = Aarry.prototype.slice.call;
 
 function Router() {
   this.stack = [];
@@ -33,12 +35,20 @@ Router.prototype.handle = function(req, res, out) {
   }
   next()
 }
-Router.prototype.get = function(path, handler) {
-  // 往 Router 里面添加一层
-  let route = this.route(path);
-  // 向Route里添加一层
-  route.get(handler);
-}
+methods.forEach(function(method) {
+  Router.prototype[method] = function(path) {
+    let route = this.route(path);
+    // 向Route里添加一层
+    route[method].apply(route, slice(arguments, 1))
+    return this
+  }
+})
+// Router.prototype.get = function(path, handler) {
+//   // 往 Router 里面添加一层
+//   let route = this.route(path);
+//   // 向Route里添加一层
+//   route.get(handler);
+// }
 
 module.exports = Router
 /**
