@@ -1,19 +1,19 @@
 let app = {}
 app.middlewares = []
 app.use = function(cb) {
-    app.middlewares.push(cb)
+  app.middlewares.push(cb)
 }
 
 app.use((next) => {
-    console.log(1, next)
-    next()
-    console.log(2)
+  console.log(1, next)
+  next()
+  console.log(2)
 })
 
 app.use((next) => {
-    console.log(3, next)
-    next()
-    console.log(4)
+  console.log(3, next)
+  next()
+  console.log(4)
 })
 
 // app.use((next) => {
@@ -23,7 +23,7 @@ app.use((next) => {
 // })
 
 let fn = app.middlewares.reduce((a, b) => {
-    return (...args) => a(() => b(...args))
+  return (...args) => a(() => b(...args))
 })
 fn('11')
 // let fn = app.middlewares.reduceRight((a, b) => {
