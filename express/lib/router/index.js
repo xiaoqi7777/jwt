@@ -28,7 +28,7 @@ Router.prototype.handle = function(req, res, out) {
     }
     let layer = this.stack[index++];
     if (layer.match(pathname) && layer.route && layer.route.handle_method(req.method)) {
-      layer.handle_request(req, res, next);
+      layer.handler_request(req, res, next);
     } else {
       next()
     }
@@ -38,7 +38,8 @@ Router.prototype.handle = function(req, res, out) {
 methods.forEach(function(method) {
   Router.prototype[method] = function(path) {
     let route = this.route(path);
-    // 向Route里添加一层
+    // 向Route里添加一层 
+    // slice(arguments, 1) 是当前路由执行的所有方法
     route[method].apply(route, slice(arguments, 1))
     return this
   }

@@ -2,7 +2,7 @@ let http = require('http')
 let url = require('url')
 // methods=>['get','post']
 let methods = require('methods')
-let slice = Aarry.prototype.slice.call;
+let slice = Array.prototype.slice.call;
 
 // 实现router 和 应用的分离
 let Router = require('./router')
@@ -16,6 +16,7 @@ Application.prototype.lazyrouter = function() {
     this._router = new Router();
   }
 }
+// 将所有的请求方式 提前循环
 methods.forEach(function(method) {
   Application.prototype[method] = function(path) {
     this.lazyrouter();
