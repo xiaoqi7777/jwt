@@ -2,63 +2,57 @@ let Route = require('./route')
 let Layer = require('./layer')
 let url = require('url')
 let methods = require('methods')
-let slice = Aarry.prototype.slice.call;
+let slice = Array.prototype.slice
 
 function Router() {
-  this.stack = [];
+  this.statck = []
 }
-// 创建一个Route的实例，向当前路由系统中添加一个层
-Router.prototype.route = function(path) {
-  // route 指当前一个路由实例
+
+Router.prototype._route = function(path) {
   let route = new Route(path)
-  // layer 指当前路由实例中的所有回调 
+  // 首先 每一层 处理函数都是 Layer,一层里面的所有route都放在Route中,route.dispatch.bind(route) 会放到Layout 的处理函数中 接手req,res,next等参数。
   let layer = new Layer(path, route.dispatch.bind(route))
   layer.route = route
-  this.stack.push(layer)
+  // 当前layout层结构  就是的 path和一堆处理函数
+  this.statck.push(layer)
   return route
 }
+methods.forEach(method => {
+  Router.prototype[method] = function(path) {
+    // 是往router 里面添加一层
+    let route = this._route(path)
+    route[method].apply(route, slice.call(arguments, 1))
+    return this
+  }
+})
+
+// Router.prototype.get = function(path, ...handler) {
+//   console.log('arguments', handler.length)
+//   // 往当前路由添加路由
+//   let route = this._route(path)
+//   // 当route添加handle
+//   // console.log('get luyou', handler, handler.length)
+//   route.get(handler)
+// }
 Router.prototype.handle = function(req, res, out) {
-  let idx = 0;
-  let self = this;
+  let index = 0;
+  let self = this
   let { pathname } = url.parse(req.url, true)
 
   function next() {
-    if (idx >= this.stack.length) {
-      return out()
+    if (index >= self.statck.length) {
+      return out(req, res)
     }
-    let layer = this.stack[index++];
-    if (layer.match(pathname) && layer.route && layer.route.handle_method(req.method)) {
-      layer.handler_request(req, res, next);
+    let layer = self.statck[index++]
+    // 当前一层router
+    if (layer.match(pathname) && layer.route && layer.route.handler_method(req.method)) {
+      layer.handler_request(req, res, next)
     } else {
+      // 下一层router
       next()
     }
   }
   next()
 }
-methods.forEach(function(method) {
-  Router.prototype[method] = function(path) {
-    let route = this.route(path);
-    // 向Route里添加一层 
-    // slice(arguments, 1) 是当前路由执行的所有方法
-    route[method].apply(route, slice(arguments, 1))
-    return this
-  }
-})
-// Router.prototype.get = function(path, handler) {
-//   // 往 Router 里面添加一层
-//   let route = this.route(path);
-//   // 向Route里添加一层
-//   route.get(handler);
-// }
 
 module.exports = Router
-/**
- * Router
- *  stack
- *    layer 
- *      path route
- *        method handler
- * Layer
- * Router Layer 路径 处理函数(route.dispatch) 有一个特殊的route属性
- * Route layer  路径 处理函数(真正的业务代码) 有一个特殊的属性method
- */

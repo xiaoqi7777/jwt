@@ -1,46 +1,45 @@
 let http = require('http')
-let url = require('url')
-// methods=>['get','post']
+// methods 里面包含了所有的方法名 都是小写，是一个数组
 let methods = require('methods')
-let slice = Array.prototype.slice.call;
-
-// 实现router 和 应用的分离
 let Router = require('./router')
+let slice = Array.prototype.slice
 
 function Application() {
-  // this._router = new Router();
+  this._router = new Router()
 }
-
+// 懒加载 
 Application.prototype.lazyrouter = function() {
   if (!this._router) {
-    this._router = new Router();
+    this._router = new Router()
   }
 }
-// 将所有的请求方式 提前循环
-methods.forEach(function(method) {
+methods.forEach(method => {
   Application.prototype[method] = function(path) {
-    this.lazyrouter();
-    // 这样写可以支持多个处理函数
-    this._router[method].apply(this._router, slice(arguments))
-    return this;
+    this.lazyrouter()
+    // 把path和处理函数 都传递给 处理路径
+    this._router[method].apply(this._router, slice.call(arguments))
+    return this
   }
 })
-// 懒加载
-// Application.prototype.get = function(path, handler) {
-//   this.lazyrouter();
-//   this._router.get(path, handler)
+
+// Application.prototype.get = function(path, ...handler) {
+//   this.lazyrouter()
+//   this._router.get(path, ...handler)
+//   return this
 // }
+
 Application.prototype.listen = function() {
-  let self = this
   let server = http.createServer((req, res) => {
-    function done() {
+    function done(req, res) {
+      console.log('cannot')
       res.end(`Cannot ${req.method} ${req.url}`)
     }
-    // 如果路由系统无法处理,没有一条路由跟请求匹配,就交给done来处理
-    self._router.handle(req, res, done)
+    this._router.handle(req, res, done)
   })
-  // server.listen.apply(server, arguments)
-  server.listen(...arguments)
+
+  server.listen.apply(server, arguments)
+
 }
+
 
 module.exports = Application

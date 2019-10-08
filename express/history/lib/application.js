@@ -7,8 +7,15 @@ let slice = Array.prototype.slice
 function Application() {
   this._router = new Router()
 }
+// 懒加载 
+Application.prototype.lazyrouter = function() {
+  if (!this._router) {
+    this._router = new Router()
+  }
+}
 
 Application.prototype.get = function(path, ...handler) {
+  this.lazyrouter()
   this._router.get(path, ...handler)
   return this
 }

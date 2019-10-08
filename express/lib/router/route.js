@@ -1,56 +1,63 @@
 let Layer = require('./layer')
 let methods = require('methods')
-let slice = Aarry.prototype.slice.call;
+let slice = Array.prototype.slice
 
 function Route(path) {
-  this.path = path;
-  this.stack = [];
-  // 表示此路由有此方法的处理函数
-  this.methods = []
+  this.path = path
+  this.stack = []
+  this.methods = {}
 }
-// 对 methods 的优化
-Route.prototype.handle_method = function(method) {
+
+Route.prototype.handler_method = function(method) {
   method = method.toLowerCase()
   return this.methods[method]
 }
-methods.forEach(function(method) {
+
+methods.forEach(method => {
   Route.prototype[method] = function() {
-    let handlers = slice(arguments)
+    let handlers = slice.call(arguments)
     this.methods[method] = true
     for (let i = 0; i < handlers.length; i++) {
       let layer = new Layer('/', handlers[i])
-      layer.method = this.method
-      // 把当前调用的get方法和回调函数保存到statck中
+      layer.method = method
       this.stack.push(layer)
     }
     return this
   }
 })
-// // 真正 路由调用的 get
-// Route.prototype.get = function(handler) {
-//   let layer = new Layer('/', handler)
-//   layer.method = this.method
-//   this.methods['get'] = true
-//   // 把当前调用的get方法和回调函数保存到statck中
-//   this.stack.push(layer)
+
+// Route.prototype.get = function(handlers) {
+//   for (let i = 0; i < handlers.length; i++) {
+//     let handler = handlers[i]
+//     let layer = new Layer('/', handler)
+//     this.methods['get'] = true
+//     layer.method = 'get'
+//     this.stack.push(layer)
+//   }
 // }
 
-// 执行stack中的所有数据
 Route.prototype.dispatch = function(req, res, out) {
-  let idx = 0;
-  let self = this;
+
+  let index = 0;
+  let self = this
 
   function next() {
-    if (idx >= this.stack.length) {
-      out() //route.dispath里的out刚好是Router的next
+    if (index >= self.stack.length) {
+      return out(req, res)
     }
-    let layer = this.stack[idx++];
-    if (layer.method == req.method.toLowerCase()) {
-      layer.handler_request(req, res, next);
+    let layer = self.stack[index++]
+
+    if (layer.method === req.method.toLowerCase()) {
+      layer.handler_request(req, res, next)
     } else {
+      // 当前层走完，到下一个router
       next()
     }
   }
+
   next()
+
 }
+
+
 module.exports = Route
