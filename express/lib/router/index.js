@@ -46,7 +46,11 @@ Router.prototype.handle = function(req, res, out) {
     let layer = self.statck[index++]
     // 当前一层router
     if (layer.match(pathname) && layer.route && layer.route.handler_method(req.method)) {
-      layer.handler_request(req, res, next)
+      if (err) {
+        layer.handler_error(err, req, res, next) //专门处理错误的
+      } else {
+        layer.handler_request(req, res, next)
+      }
     } else {
       // 下一层router
       next()

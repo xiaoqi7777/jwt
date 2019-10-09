@@ -4,7 +4,7 @@ let app = express()
 
 app.get('/1', function(req, res, next) {
   console.log('get1-1')
-  next()
+  next('wrong') // 如果任何出错了，会把错误交给next,然后会跳过后面所有的正常处理函数,交给错误处理中间件进行处理
 }, function(req, res, next) {
   console.log('get1-2')
   res.end('11')

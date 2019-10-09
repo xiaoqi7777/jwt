@@ -42,6 +42,10 @@ Route.prototype.dispatch = function(req, res, out) {
   let self = this
 
   function next() {
+    // 如果一旦 路由函数中出错了 就会跳过当前路由
+    if (err) {
+      return out(req, res, err)
+    }
     if (index >= self.stack.length) {
       return out(req, res)
     }
