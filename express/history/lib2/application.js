@@ -13,9 +13,6 @@ Application.prototype.lazyrouter = function() {
     this._router = new Router()
   }
 }
-
-// 收集
-// 收集 路由配置 ,对所有配置的路由 都在router.index 生成一个实例
 methods.forEach(method => {
   Application.prototype[method] = function(path) {
     this.lazyrouter()
@@ -25,8 +22,19 @@ methods.forEach(method => {
   }
 })
 
-// 执行
-// 监听的时候 用请求的数据 和 之前配置的路由进行匹配 处理
+// Application.prototype.get = function(path, ...handler) {
+//   this.lazyrouter()
+//   this._router.get(path, ...handler)
+//   return this
+// }
+
+// 添加中间件,而中间件和普通的路由都是放在一个数组中的，放在this._router.stack
+
+Application.prototype.use = function() {
+  this.lazyrouter();
+  this._router.use.apply(this._router, arguments);
+}
+
 Application.prototype.listen = function() {
   let server = http.createServer((req, res) => {
     function done(req, res) {

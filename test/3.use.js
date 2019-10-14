@@ -1,11 +1,11 @@
-let express = require('express')
+let express = require('../express/lib1/express')
 let app = express()
 
 app.use(function(req, res, next) {
   console.log('Ware1', Date.now())
-  next()
+  next('wrong')
 })
-app.get('/', function(req, res, next) {
+app.get('/1', function(req, res, next) {
   res.end('1')
 })
 // 创建一个新的路由容器 或者说路由系统

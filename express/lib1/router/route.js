@@ -13,7 +13,6 @@ Route.prototype.handler_method = function(method) {
   return this.methods[method]
 }
 
-// 收集每个请求 内部的执行的方法  将他们用 layer 实例化 存放在stack中 等待当前的请求匹配的时候 在执行
 methods.forEach(method => {
   Route.prototype[method] = function() {
     let handlers = slice.call(arguments)
@@ -35,9 +34,10 @@ Route.prototype.dispatch = function(req, res, out) {
 
   function next(err) {
     // 如果一旦 路由函数中出错了 就会跳过当前路由
+    console.log('======>', err)
     if (err) {
-      console.log('err', err)
-      return out(req, res, err)
+      console.log('err=======', err)
+      return out(err)
     }
     if (index >= self.stack.length) {
       return out(req, res)
@@ -48,10 +48,12 @@ Route.prototype.dispatch = function(req, res, out) {
       layer.handler_request(req, res, next)
     } else {
       // 当前层走完，到下一个router
-      next('123')
+      next()
     }
   }
+
   next()
+
 }
 
 
