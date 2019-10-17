@@ -1,18 +1,25 @@
 <template>
   <div id="app">
     <div>
-      <router-link :to="{path:'/'}">h1</router-link>
+      <HA></HA>
+      <!-- <router-link :to="{path:'/'}">h1</router-link>
       <br/>
-      <router-link :to="{path:'/h2'}">h2</router-link>
+      <router-link :to="{path:'/h2'}">h2</router-link> -->
     </div>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
 <script>
 
 export default {
-
+  components: {
+    HA: {
+      render: function (h) {
+        return h('h1', 1)
+      }
+    }
+  }
 }
 </script>
 
