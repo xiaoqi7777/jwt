@@ -36,6 +36,7 @@ Router.prototype.handle = function(req, res, out) {
   let { pathname } = url.parse(req.url, true)
 
   function next(err) {
+    console.log(index, '===>', err)
     if (index >= self.statck.length) {
       return out(req, res)
     }

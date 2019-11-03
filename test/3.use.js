@@ -1,9 +1,10 @@
-let express = require('../express/lib1/express')
+let express = require('../express/lib2/express')
 let app = express()
 
 app.use(function(req, res, next) {
   console.log('Ware1', Date.now())
-  next('wrong')
+  // next('wrong')
+  next()
 })
 app.get('/1', function(req, res, next) {
   res.end('1')
@@ -12,6 +13,7 @@ app.get('/1', function(req, res, next) {
 const user = express.Router()
 user.use(function(req, res, next) {
   console.log('Ware2', Date.now())
+  // next('wrong11')
   next()
 })
 user.get('/2', function(req, res, next) {

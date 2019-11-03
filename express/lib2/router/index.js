@@ -11,6 +11,7 @@ function Router() {
   }
   Object.setPrototypeOf(router, proto)
   router.statck = []
+  router.paramCallbacks = []
   return router
 }
 let proto = Object.create(null)
@@ -42,7 +43,46 @@ methods.forEach(method => {
     return this
   }
 })
+proto.param = function(name, handler) {
+  console.log('11111', this.paramCallbacks)
+  if (!this.paramCallbacks[name]) {
+    this.paramCallbacks[name] = []
+  }
+  this.paramCallbacks[name].push(handler);
+}
+proto.process_params = function(layer, req, res, done) {
+  const paramCallbacks = this.paramCallbacks;
+  const keys = layer.keys;
+  if (!keys || keys.length == 0) {
+    return done();
+  }
+  let keyIndex = 0,
+    name, callbacks, key, val;
 
+  function param() {
+    if (keyIndex >= keys.length) {
+      return done();
+    }
+    key = keys[keyIndex++];
+    name = key.name;
+    val = req.params[name];
+    callbacks = paramCallbacks[name];
+    if (!val || !callbacks) {
+      return param();
+    }
+    execCallback();
+  }
+  let callbackIndex = 0;
+
+  function execCallback() {
+    let cb = callbacks[callbackIndex++];
+    if (!cb) {
+      return param();
+    }
+    cb(req, res, execCallback, val, name);
+  }
+  param();
+}
 /**
  * 1、处理中间件
  * 2、处理子路由容器
@@ -58,7 +98,6 @@ proto.handle = function(req, res, out) {
   let { pathname } = url.parse(req.url, true)
   // err 是接受错误处理
   function next(err) {
-    console.log('next', err, index, self.statck.length)
     if (removed.length > 0) {
       req.url = removed + req.url;
       removed = "";
@@ -72,16 +111,20 @@ proto.handle = function(req, res, out) {
       if (!layer.route) { //这一层是中间件层
         removed = layer.path;
         req.url = req.url.slice(removed.length)
+        console.log('index', err)
         if (err) {
-          console.log('======', err)
           layer.handler_error(err, req, res, next)
         } else {
+          console.log('layer', typeof layer.handler, layer)
           layer.handler_request(req, res, next)
         }
       } else {
         // 是路由
         if (layer.route && layer.route.handler_method(req.method)) {
-          layer.handler_request(req, res, next)
+          req.params = layer.params;
+          self.process_params(layer, req, res, function() {
+            layer.handler_request(req, res, next);
+          })
         } else {
           // 下一层router
           next(err)

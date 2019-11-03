@@ -5,7 +5,8 @@ let Router = require('./router')
 let slice = Array.prototype.slice
 
 function Application() {
-  this._router = new Router()
+  this.settings = {} // 用来保存参数
+  this.engines = {} //用来保存文件扩展名和渲染的函数
 }
 // 懒加载 
 Application.prototype.lazyrouter = function() {
@@ -13,8 +14,27 @@ Application.prototype.lazyrouter = function() {
     this._router = new Router()
   }
 }
+Application.prototype.param = function(name, handler) {
+  this.lazyrouter()
+  this._router.param.apply(this._router, arguments)
+}
+// 传二个参数表示设置 传一个参数表示获取
+Application.prototype.set = function(key, val) {
+  if (arguments.length == 1) {
+    return this.settings[key]
+  }
+  this.settings[key] = val
+}
+// 规定何种文件用什么方法来渲染
+Application.prototype.engine = function(ext, render) {
+  let extension = ext[0] == '.' ? ext : '.' + ext
+  this.engines[extension] = render;
+}
 methods.forEach(method => {
   Application.prototype[method] = function(path) {
+    if (method == 'get' && arguments.length == 1) {
+      return this.set(arguments[0])
+    }
     this.lazyrouter()
     // 把path和处理函数 都传递给 处理路径
     this._router[method].apply(this._router, slice.call(arguments))
@@ -38,7 +58,7 @@ Application.prototype.use = function() {
 Application.prototype.listen = function() {
   let server = http.createServer((req, res) => {
     function done(req, res, err) {
-      console.log('cannot==>' + err)
+      console.log('cannot' + err)
       res.end(`Cannot ${req.method} ${req.url}`)
     }
     this._router.handle(req, res, done)
