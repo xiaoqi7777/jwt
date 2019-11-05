@@ -125,7 +125,6 @@ proto.handle = function(req, res, done, a1) {
         if (layer.router && layer.router.handle_method(req.method)) {
           req.params = layer.params
           self.process_params(layer, req, res, function() {
-            console.log('qqqq')
             layer.handler_request(req, res, next)
           })
         } else {

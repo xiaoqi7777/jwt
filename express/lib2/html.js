@@ -2,6 +2,7 @@ const fs = require('fs')
 
 function render(filepath, options, callback) {
   fs.readFile(filepath, 'utf8', function(err, str) {
+    console.log('str', filepath)
     let head = "let tpl = ``;\n with(obj){ \n tpl+=` "
     str = str.replace(/<%=([\s\S]+?)%>/g, function() {
       return "${" + arguments[1] + "}"

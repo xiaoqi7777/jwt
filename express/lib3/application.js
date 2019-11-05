@@ -4,6 +4,8 @@ let methods = require('methods')
 
 function Application() {
   this._route = null
+  this.settings = {}
+  this.engines = {}
 }
 
 Application.prototype.lazyrouter = function() {
@@ -19,9 +21,22 @@ Application.prototype.param = function(name, handler) {
 methods.forEach(method => {
   Application.prototype[method] = function(path, ...handler) {
     this.lazyrouter()
+    if (method == 'get' && arguments.length == 1) {
+      return this.set(arguments[0])
+    }
     this._route[method](path, ...handler)
   }
 })
+Application.prototype.set = function(name, key) {
+  if (arguments.length == 1) {
+    return this.settings[name]
+  }
+  this.settings[name] = key
+}
+Application.prototype.engine = function(name, render) {
+  name = name.indexOf('.') > 0 ? name : '.' + name
+  this.engines[name] = render
+}
 Application.prototype.use = function() {
   this.lazyrouter()
   this._route.use.apply(this._route, arguments)

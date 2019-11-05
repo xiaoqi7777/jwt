@@ -1,13 +1,13 @@
 // const express = require('../express')
-let express = require('../express/lib2/express')
+let express = require('../express/lib3/express')
 const path = require('path')
-const html = require('../express/lib2/html.js')
+const html = require('../express/lib3/html.js')
 const app = express()
 const fs = require('fs')
 
 
 // views是用来设置模板存放根目录
-app.set('views', path.resolve('views'))
+app.set('views', path.resolve(__dirname, 'views'))
 // 设置模板引擎 如果render没有指定模板后台名 会以这个作为后缀名
 app.set('view engine', 'html')
 
@@ -29,7 +29,6 @@ app.use(function(req, res, next) {
 
     function done(err, rs) {
       res.setHeader('Content-Type', 'text/html')
-      console.log('===')
       res.end(rs)
     }
     render(filepath, options, done)
@@ -60,38 +59,38 @@ app.listen(3000)
 // console.log(rs)
 
 // ejs if渲染原理
-let options = { user: { name: 'zdpx', age: 9 }, total: 5 }
-let str = `
-<%if(user){%>
-  hello '<%=user.name%>'
-<%}else{%>
-  hi guest
-<%}%>
-<ul>
-<%for(let i=0;i<total;i++){%>
-  <li><%=i%></li>
-<%}%>
-</ul>
-`
+// let options = { user: { name: 'zdpx', age: 9 }, total: 5 }
+// let str = `
+// <%if(user){%>
+//   hello '<%=user.name%>'
+// <%}else{%>
+//   hi guest
+// <%}%>
+// <ul>
+// <%for(let i=0;i<total;i++){%>
+//   <li><%=i%></li>
+// <%}%>
+// </ul>
+// `
 
-function render(str, options) {
-  let head = "let tpl = ``;\n with(obj){ \n tpl+=` "
-  str = str.replace(/<%=([\s\S]+?)%>/g, function() {
-    return "${" + arguments[1] + "}"
-  })
-  str = str.replace(/<%([\s\S]+?)%>/g, function() {
-    return "`;\n" + arguments[1] + "\n;tpl+=`";
-  })
-  let tail = "`} \n return tpl;"
-  let html = head + str + tail;
-  // console.log('html=>', html)
-  let fn = new Function('obj', html)
-  return fn(options)
-}
+// function render(str, options) {
+//   let head = "let tpl = ``;\n with(obj){ \n tpl+=` "
+//   str = str.replace(/<%=([\s\S]+?)%>/g, function() {
+//     return "${" + arguments[1] + "}"
+//   })
+//   str = str.replace(/<%([\s\S]+?)%>/g, function() {
+//     return "`;\n" + arguments[1] + "\n;tpl+=`";
+//   })
+//   let tail = "`} \n return tpl;"
+//   let html = head + str + tail;
+//   console.log('html=>', html)
+//   let fn = new Function('obj', html)
+//   return fn(options)
+// }
 
 
-let rs = render(str, options)
-console.log(rs)
+// let rs = render(str, options)
+// console.log(rs)
 
 /*
   js 有三种作用域
