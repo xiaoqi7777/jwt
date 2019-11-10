@@ -1,10 +1,10 @@
 // const express = require('../express')
-let express = require('../express/lib3/express')
+let express = require('../express/express')
 const path = require('path')
-const html = require('../express/lib3/html.js')
+const html = require('../express/html.js')
 const app = express()
 const fs = require('fs')
-
+let url = require('url')
 
 // views是用来设置模板存放根目录
 app.set('views', path.resolve(__dirname, 'views'))
@@ -15,6 +15,37 @@ app.set('view engine', 'html')
 // 用来设置模板引擎,遇到html结尾的模板用html来进行渲染
 // app.engine('.html', require('ejs').__express)
 app.engine('html', html)
+
+app.use(function(req, res, next) {
+  let { pathname } = url.parse(req.url)
+  req.path = pathname
+  next()
+})
+
+function bodyParser() {
+  return function(req, res, next) {
+    let rs = []
+    req.on('data', function(data) {
+      rs += data
+    })
+    req.on('end', function(data) {
+      try {
+        req.body = JSON.parse(rs)
+      } catch (e) {
+        req.body = require('querystring').parse(rs)
+      }
+      next()
+    })
+  }
+};
+
+app.use(bodyParser())
+app.post('/post', function(req, res, next) {
+  let str = req.body
+  console.log('str', req.body.xx, typeof req.body)
+  res.end('str')
+})
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.render = function(name, options) {
@@ -39,8 +70,10 @@ app.use(function(req, res, next) {
 // 当客户端以get方式访问/路径的时候执行对应的回调函数
 app.get('/', function(req, res, next) {
   // render 第一个参数是模板的相对路径 模板名称 数据对象
-  res.render('index', { title: 'hello', user: { name: 'zfxp' } })
+  res.render('index', { title: 'helloxx', user: { name: 'zfxp' } })
 })
+
+
 app.listen(3000)
 
 

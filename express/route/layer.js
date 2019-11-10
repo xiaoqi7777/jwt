@@ -25,7 +25,7 @@ Layer.prototype.match = function(url) {
     }
   }
   // 中间件
-  if (!this.route) {
+  if (!this.router) {
     return url.startsWith(this.path)
   }
 }
