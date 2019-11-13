@@ -103,6 +103,7 @@
         A[i+1] = key               // N-2
       }
     }
+    两个循环 基本都是o(n^2)
     // 最好 O(N) 
           没有while 循环
     // 最坏 O(N^2) 
@@ -119,4 +120,104 @@
 
       代表:
       归并排序、快递排序 
+
+      归并排序
+      const sentinel = Number.MAX_SAFE_INTEGER
+      function divide(p, r) {
+        return Math.floor((p + r) / 2)
+      }
+
+      function conquer(A, p, q, r) {
+        const A1 = A.slice(p, q)
+        const A2 = A.slice(q, r)
+        A1.push(sentinel)
+        A2.push(sentinel)
+        // k 是循环不变式 一直是处于 已排序和未排序中
+        for (let k = p, i = 0, j = 0; k < r; k++) {
+          A[k] = A1[i] < A2[j] ? A1[i++] : A2[j++]
+        }
+      }
+
+      // p 开始位子  r 数组长度
+      function merge_sort(A, p = 0, r) {
+        r = r || A.length
+        if (r - p === 1) { return }
+        if (r - p === 2) {
+          if (A[p] > A[r - 1]) {
+            [A[p], A[r - 1]] = [A[r - 1], A[p]]
+          }
+          return
+        }
+        const q = divide(p, r)
+        merge_sort(A, p, q)
+        merge_sort(A, q, r)
+        conquer(A, p, q, r)
+      }
+      const A = [5, 4, 3, 2, 1]
+      merge_sort(A)
+      console.log(A)
+
+
+    数组修改  o(1)
+    数组插入元素 o(n)
+    追加元素 o(1) 一般来说 复杂的是o(n)
+
+
+    查找最大值
+    Number.NEGATIVE_INFINITY是一个常量 负无穷
+    function find_max(arr) {
+      let max = Number.NEGATIVE_INFINITY
+      for (let i = 0; i < arr.length; i++) {
+        max = (arr[i] > max ? arr[i] : max)
+      }
+      console.log(max)
+      return max
+    }
+
+    find_max([1, 2, 3, 4])
+
+    等差数列求和公式
+    Sn=(A1+An)n/2
+    A1是第一项 An是第二项
+    1+2+3+4+...+n-1 = (1+n-1)(n-1)/2 = n(n-1)/2   其实复杂度 o(n^2)
+
+    基本上2个循环 就是o(n^2)
+
+    冒泡 也是o(n^2)
+    function swap(A, i, j) {
+      const t = A[j]
+      A[j] = A[i]
+      A[i] = t
+    }
+
+    function fn(A) {
+      for (let i = A.length; i > 0; i--) {
+        for (let j = 1; j < i; j++) {
+          if (A[j] < A[j - 1]) {
+            swap(A, j, j - 1)
+          }
+        }
+      }
+      return A
+    }
+    // 算法校验的 库  跑起来不报异常就正确
+    const { assert } = require('chai')
+    assert.deepEqual(
+      fn([5, 4, 3, 2, 1]),
+      [1, 2, 3, 4, 5]
+    )
+
+    桶排序 O(n)的算法
+      a 桶的数量
+      n 代表数据的规模
+      G 某一个算法的时长
+    
+    // 数组打平
+    let arr = [1,[2,3],4]
+    // 默认打平一层 flat里面可以加参数
+    1、arr.flat()
+    //    
+    2、eval(`[${arr + ''}]`)
+      a、所有的数组+'' 都会被转成字符串 [1,2,4]+'' => 1,2,3
+      b、在外面包裹[] 最后通过eval 输出
 */

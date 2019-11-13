@@ -1,14 +1,25 @@
-let A = [6, 4, 3, 1]
+function bucket_sort(A) {
+  // a-桶的数量
+  const a = A.length
 
-function insertion_sort(A) {
-  for (let j = 1; j < A.length; j++) {
-    const key = A[j] // 4
-    let i = j - 1 // 0
-    while (i >= 0 && A[i] > key) {
-      A[i + 1] = A[i]
-      i--
-    }
-    A[i + 1] = key
-  }
+  // 桶 - a项的二维数组
+  const B = [...Array(a)].map(x => [])
+
+  // 下标算法
+  const indexFunc = (value) => value
+
+  A.forEach(value => {
+    B[indexFunc(value)].push(value)
+  })
+  console.log(B)
+
+  return B
+    .filter(bucket => {
+      return bucket.length > 0
+    }) //O(n)
+    .reduce((rs, bucket) => {
+      return rs.concat(bucket)
+    }, [])
 }
-insertion_sort(A)
+
+bucket_sort([1, 2, 3, 1])
