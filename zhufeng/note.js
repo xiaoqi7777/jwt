@@ -159,8 +159,8 @@
 
 
     数组修改  o(1)
-    数组插入元素 o(n)
-    追加元素 o(1) 一般来说 复杂的是o(n)
+    数组插入元素 O(n)
+    追加元素 o(1) 一般来说 复杂的是O(n)
 
 
     查找最大值
@@ -212,12 +212,54 @@
       n 代表数据的规模
       G 某一个算法的时长
     
-    // 数组打平
-    let arr = [1,[2,3],4]
-    // 默认打平一层 flat里面可以加参数
-    1、arr.flat()
-    //    
-    2、eval(`[${arr + ''}]`)
-      a、所有的数组+'' 都会被转成字符串 [1,2,4]+'' => 1,2,3
-      b、在外面包裹[] 最后通过eval 输出
-*/
+function bucket_sort(A) {
+  // a-桶的数量
+  const a = A.length
+
+  // 桶 - a项的二维数组
+  const B = [...Array(a)].map(x => [])
+
+  // 下标算法
+  const indexFunc = (value) => value
+
+  A.forEach(value => {
+    B[indexFunc(value)].push(value)
+  })
+  console.log('b', B)
+
+  // 数组平铺
+  return eval(`[${B + ''}]`)
+  // 1
+  return eval(`[${B + ''}]`)
+  // 2
+  return [].concat(...B)
+  // 3
+  return B
+    .filter(bucket => {
+      return bucket.length > 0
+    }) //O(n)
+    .reduce((rs, bucket) => {
+      // concat O(n)
+      return rs.concat(bucket)
+    }, [])
+}
+
+let v = bucket_sort([1, 2, 3, 1])
+console.log(v, v.length)
+
+
+// 数组打平
+let arr = [1, [2, 3], 4]
+// 默认打平一层 flat里面可以加参数
+1、 arr.flat()
+//    
+2、 eval(`[${arr + ''}]`)
+a、 所有的数组 + ''
+都会被转成字符串[1, 2, 4] + '' => 1, 2, 3
+b、 在外面包裹[] 最后通过eval 输出
+c、 会递归的解构
+3、[].concat(...arr)
+a、...arr 如果遇到arr里面是2层数组嵌套 他会打平 第三层就不会处理了 不会递归的解构
+
+  *
+  /
