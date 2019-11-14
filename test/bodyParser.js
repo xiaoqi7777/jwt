@@ -1,11 +1,14 @@
 // bodyParser 和 req.body 实现
+// let express = require('express')
 let express = require('../express/express')
 const path = require('path')
+
 let multer = require('multer')
 const app = express()
 let url = require('url')
 let bodyParser = require('body-parser');
 let fs = require('fs')
+
 app.use(cors())
 // app.use(myBodyParser())
 // 接收 json 格式
@@ -24,6 +27,14 @@ app.post('/form', function(req, res, next) {
   console.log('form', req.body)
   res.end('form')
 })
+console.log('path', path.join(__dirname, 'upload'))
+app.use(express.static(path.join(__dirname, 'upload')));
+
+// app.get('/file', (req, res) => {
+//   let img = fs.createReadStream(path.join(__dirname, '../client', 'baidu.png'))
+//   // console.log('img', img)
+//   res.end(img)
+// })
 // 只有一个文件类型的用upload.single('avatar') 处理
 app.post('/upload', upload.single('avatar'), (req, res) => {
   // req.file 里面存放的文件类型的数据

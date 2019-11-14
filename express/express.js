@@ -9,11 +9,12 @@ function express() {
 }
 express.static = function(p) {
   return function(req, res, next) {
-    let staticPath = path.join(p, req.path + '.html')
+    let staticPath = path.join(p, req.url)
     let exists = fs.existsSync(staticPath)
     if (exists) {
       let html = fs.readFile(staticPath, (err, item) => {
         res.setHeader('Content-Type', 'text/html')
+        // res.setHeader('Content-type', 'image/png')
         res.end(item)
       })
     } else {

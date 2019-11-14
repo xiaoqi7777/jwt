@@ -8,6 +8,7 @@ function Layer(path, handler) {
   this.reg = pathToRegexp(this.path, this.keys)
 }
 Layer.prototype.match = function(url) {
+
   // 路由
   if (this.path == url) {
     return this.path == url

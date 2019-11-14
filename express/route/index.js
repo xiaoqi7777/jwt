@@ -18,6 +18,7 @@ proto._route = function(path) {
   let router = new Router(path)
   let layer = new Layer(path, router.dispatch.bind(router))
   layer.router = router
+  layer.a1 = 11
   this.stack.push(layer)
   return router
 }
@@ -83,6 +84,7 @@ proto.use = function(path, handler) {
   }
   let layer = new Layer(path, handler)
   layer.router = undefined
+  layer.a1 = 22
   this.stack.push(layer)
 }
 
@@ -113,7 +115,7 @@ proto.handle = function(req, res, done, a1) {
     if (layer.match(pathname)) {
       if (!layer.router) {
         // 如果是二级路由 对url 做处理 然后走到中间件 执行传入的Router, 然后会再次执行handle
-        let removed = layer.path
+        removed = layer.path
         req.url = req.url.slice(removed.length)
         // 是中间件 use
         if (err) {

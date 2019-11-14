@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+  <style>
+    #flag {
+      margin-left: 1500px;
+    }
+
+    .btn {
+      margin-left: 1500px;
+    }
+  </style>
+</head>
+
+<body>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <div>
+    ========
+  </div>
+  <div id="flag">
+    11
+    <img src="http://localhost:3001/baidu.png" alt="">
+  </div>
+  <div>
+    -----------
+  </div>
+  <img src="" alt="" id="img">
+  <div class="btn">
+    <button id="btn" @click="btn">点击</button>
+  </div>
+  <script>
+    (async () => {
+      let dom = document.querySelector('#flag')
+      let img = document.querySelector('#img')
+      let btn = document.querySelector('#btn')
+
+      btn.addEventListener('click', async () => {
+        // 空白原因
+        // 截图是截取 visual area 可设置 滑动条的距离处理  
+        // window.pageXOffset = 100
+        // document.documentElement.scrollTop = 0
+        // document.body.scrollTop = 0
+        let canvas = await html2canvas(dom,
+        {
+          useCORS: true
+        })
+
+        let url = canvas.toDataURL()
+        img.setAttribute('src', url)
+        console.log(canvas, url)
+
+      })
+    })()
+  </script>
+</body>
+
+</html>
