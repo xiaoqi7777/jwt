@@ -1,35 +1,69 @@
-const sentinel = Number.MAX_SAFE_INTEGER
-
 function divide(p, r) {
   return Math.floor((p + r) / 2)
 }
 
-function conquer(A, p, q, r) {
+function merge(A, p, q, r) {
+  // 拆分 2,10 | 3,7
   const A1 = A.slice(p, q)
   const A2 = A.slice(q, r)
-  A1.push(sentinel)
-  A2.push(sentinel)
-  // k 是循环不变式 一直是处于 已排序和未排序中
-  for (let k = p, i = 0, j = 0; k < r; k++) {
-    A[k] = A1[i] < A2[j] ? A1[i++] : A2[j++]
+  // 当j和k 匹配完时候就成2 但是数组中只有2个数 一般给他们一个哨兵
+  // 哨兵
+  A1.push(Number.POSITIVE_INFINITY)
+  A2.push(Number.MAX_SAFE_INTEGER)
+
+  for (let i = p, j = 0, k = 0; i < r; i++) {
+    if (A1[j] < A2[k]) {
+      A[i] = A1[j++]
+    } else {
+      A[i] = A2[k++]
+    }
+    // [p,i]区间已经排序
   }
+
+  return A
 }
 
-// p 开始位子  r 数组长度
-function merge_sort(A, p = 0, r) {
-  r = r || A.length
-  if (r - p === 1) { return }
-  if (r - p === 2) {
-    if (A[p] > A[r - 1]) {
-      [A[p], A[r - 1]] = [A[r - 1], A[p]]
-    }
+function merge_sort(A, p, r) {
+  if (r - p === 1) {
     return
   }
   const q = divide(p, r)
   merge_sort(A, p, q)
   merge_sort(A, q, r)
-  conquer(A, p, q, r)
+  merge(A, p, q, r)
+  return A
 }
-const A = [5, 4, 3, 2, 1]
-merge_sort(A)
-console.log(A)
+
+const { assert } = require('chai')
+// 单个比较用 equal   数组多个用deepEqual
+// assert.equal(divide(0, 10), 5)
+// assert.equal(divide(0, 10), 5)
+// assert.equal(divide(0, 3), 1)
+
+assert.deepEqual(
+  merge([2, 10, 3, 7], 0, 2, 4),
+  [2, 3, 7, 10],
+  'error1')
+
+// 测试只有2个的情况
+assert.deepEqual(
+  merge([10, 2, 3, 7], 0, 1, 2),
+  [2, 10, 3, 7],
+  'error2')
+
+assert.deepEqual(
+  merge([10, 2, 7, 3], 2, 3, 4),
+  [10, 2, 3, 7],
+  'error3')
+
+
+assert.deepEqual(
+  merge([10, 2, 3], 0, 1, 3),
+  [2, 3, 10],
+  'error3')
+
+assert.deepEqual(
+  merge_sort([10, 3, 100], 0, 3),
+  [3, 10, 100],
+  'error4'
+)
