@@ -1,1 +1,5 @@
-console.log('12')
+// console.log('index')
+
+// import './index.css'
+
+say()
