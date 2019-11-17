@@ -8,46 +8,69 @@
   <title>Document</title>
   <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
   <style>
-    #flag {
+    /* #flag {
       margin-left: 1500px;
-    }
+    } */
 
-    .btn {
+    /* .btn {
       margin-left: 1500px;
-    }
+    } */
   </style>
 </head>
 
 <body>
   <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
   <div>
     ========
   </div>
+  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
   <div id="flag">
-    11
-    <img src="http://localhost:3001/baidu.png" alt="">
+
+    2222222222222222222222222222222222222222222222222222222222222222222222233<img src="http://localhost:3001/200200.gif" alt="">
+
+    <br />11
   </div>
   <div>
     -----------
   </div>
+  <!-- <div id="img">
+
+  </div> -->
   <img src="" alt="" id="img">
   <div class="btn">
-    <button id="btn" @click="btn">点击</button>
+    111111111111111111111111111 <button id="btn" @click="btn">点击</button>
   </div>
   <script>
     (async () => {
@@ -58,15 +81,25 @@
       btn.addEventListener('click', async () => {
         // 空白原因
         // 截图是截取 visual area 可设置 滑动条的距离处理  
-        // window.pageXOffset = 100
-        // document.documentElement.scrollTop = 0
-        // document.body.scrollTop = 0
-        let canvas = await html2canvas(dom,
-        {
-          useCORS: true
-        })
+        // window.pageXOffset = 0
+        document.documentElement.scrollTop = 0
+        document.documentElement.scrollLeft = 0
+        document.body.scrollTop = 0
+        var opts = {
+          scale: 2,
+          useCORS: true,
+          width: 1000,
+
+        };
+        let canvas = await html2canvas(document.querySelector('#flag'),
+          opts
+        )
 
         let url = canvas.toDataURL()
+        // img.setAttribute('src', url)
+        // let Img = document.createElement('img')
+        // Img.src = url
+        // img.appendChild(Img)
         img.setAttribute('src', url)
         console.log(canvas, url)
 
