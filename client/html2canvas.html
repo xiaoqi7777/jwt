@@ -8,13 +8,18 @@
   <title>Document</title>
   <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
   <style>
-    /* #flag {
-      margin-left: 1500px;
-    } */
+    #flag {
+      margin-top: 500px;
+      margin-left: 500px;
+      /* position: absolute; */
+    }
 
-    /* .btn {
-      margin-left: 1500px;
-    } */
+    .btn {
+      margin-top: 2000px;
+      /* margin-left: 2000px; */
+      /* margin-top: 200px; */
+      /* margin-left: 250px; */
+    }
   </style>
 </head>
 
@@ -23,44 +28,9 @@
   <div>
     ========
   </div>
-  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-
-  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
   <br />
   <div id="flag">
-
-    2222222222222222222222222222222222222222222222222222222222222222222222233<img src="http://localhost:3001/200200.gif" alt="">
-
-    <br />11
+      <img src="http://localhost:3001/200200.gif" alt="">
   </div>
   <div>
     -----------
@@ -70,7 +40,7 @@
   </div> -->
   <img src="" alt="" id="img">
   <div class="btn">
-    111111111111111111111111111 <button id="btn" @click="btn">点击</button>
+     <button id="btn" @click="btn">点-------------击</button>
   </div>
   <script>
     (async () => {
@@ -82,13 +52,14 @@
         // 空白原因
         // 截图是截取 visual area 可设置 滑动条的距离处理  
         // window.pageXOffset = 0
-        document.documentElement.scrollTop = 0
-        document.documentElement.scrollLeft = 0
-        document.body.scrollTop = 0
+        // document.documentElement.scrollTop = 0
+        // document.documentElement.scrollLeft = 0
+        // document.body.scrollTop = 0
         var opts = {
-          scale: 2,
+          // scale: 2,
           useCORS: true,
-          width: 1000,
+          // width: 1000,
+          y:document.body.scrollTop
 
         };
         let canvas = await html2canvas(document.querySelector('#flag'),
