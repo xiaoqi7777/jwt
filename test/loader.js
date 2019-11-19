@@ -1,7 +1,4 @@
-function cssLoader(content) {
-  return content
-}
+let glob = require('glob')
 
-function styleLoader(content) {
-  return content
-}
+let rs = glob.sync('./src/**/*.{js,gif}')
+console.log(rs)

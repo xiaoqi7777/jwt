@@ -3,3 +3,7 @@
   height: 100px;
   background: url('./200200.gif');
 }
+
+::placeholder {
+  color: red;
+}

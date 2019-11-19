@@ -4,23 +4,25 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 let MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const glob = require('glob')
 module.exports = {
-  mode: 'production',
-  // mode: 'development',
+  // mode: 'production',
+  mode: 'development',
   // mode: 'production',
   // entry 如果是一个文件的话那就是单入口 chunk名字就是main,每个chunk一般都会生成一个文件
   entry: {
     index: './src/index.js',
-    img: './src/img.js',
-    login: './src/login.js',
-    common: './src/common.js'
+    // img: './src/img.js',
+    // vendors: ['react', 'react-dom']
+    // vendor: /node_modules/, // 匹配所有的依赖包
+    // vendors: glob.sync('./node_modules/**/*.js'),
   },
   optimization: { // 这里放优化的内容
     minimizer: [ //表示放优化的插件
-      // new TerserPlugin({
-      //   parallel: true, //开启多进程并进行压缩
-      //   cache: true, //开启缓存
-      // }),
+      new TerserPlugin({
+        parallel: true, //开启多进程并进行压缩
+        cache: true, //开启缓存
+      }),
       new OptimizeCSSAssetsPlugin({
 
       })
@@ -28,7 +30,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'), // 必须是绝对路径
-    filename: '[name].[hash:8].js',
+    filename: '[name].[contenthash:8].js',
     //这个name 对于entry里面的key值
     // hash有3种  hash chunkhash contentHash 当原文件变化hash就变化 用来做缓存的 
     publicPath: '/', // 根路径 在浏览器里访问的时候要以什么路径访问
@@ -37,13 +39,30 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist')
   },
+  devtool:'source-map',
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            "presets": [ // 插件的集合
+              "@babel/preset-env", //转义ES6 ES7
+              "@babel/preset-react", //转义 jsx语法
+            ],
+            "plugins": [ // 每个插件代表一个规则
+              ["@babel/plugin-proposal-decorators", { legacy: true }],
+              ["@babel/plugin-proposal-class-properties", { loose: true }],
+            ]
+          }
+        }
+      },
       {
         test: /\.css$/, // 如果用到import 或者 require 文件 是css
         // 从右向左 处理css文件,loader是一个函数
         // MiniCssExtractPlugin.loader 先收集
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
       },
       {
         test: /\.(gif|png|jpg|jpeg|svg)$/,
@@ -58,6 +77,14 @@ module.exports = {
             // name: '[name].[ext]'
           }
         }
+      },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.(html|htm)/,
@@ -81,7 +108,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
-      chunks: ['img']
+      chunks: ['index'],
+      chunksSortMode: 'manual'
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
