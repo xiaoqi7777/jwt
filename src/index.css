@@ -1,7 +1,9 @@
-#root {
+/* @import './less//index.less' */
+@import url('./less/index.less');
+/* #root {
   color: red
 }
 
 ::placeholder {
   color: red;
-}
+} */

@@ -1,9 +1,11 @@
-import Animal from './animal'
-class Person extends Animal{
-  constructor(name,age){
-    super(name)
-    this.age = age
-  }
-}
-let p = new Person('zhufeng',10)
-console.log(p)
+
+// import React from 'react';
+// import ReactDOM from 'react-dom'
+// debugger
+// ReactDOM.render(<h1>123</h1>,document.getElementById('root'))
+
+// import _ from 'lodash';
+// alert(_.join(['a','b','c'],'@'))
+// require("expose-loader?$!jquery");
+import $ from 'j'
+console.log($)
