@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 图片必须加 enctype="multipart/form-data" -->
+  <!-- 最终提交的和3file.js文件中的formData 格式一样 -->
+  <form enctype="multipart/form-data" action="http://localhost:4000/upload" method="POST">
+    <input type="text" name="name">
+    <input type="file" name="avatar">
+    <input type="submit" value="提交">
+  </form>
+</body>
+</html>
