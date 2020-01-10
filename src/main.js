@@ -1,3 +1,7 @@
+require('babel-polyfill')
+let a = new Promise(resolve=>resolve())
+console.log(a)
+
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
