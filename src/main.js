@@ -1,4 +1,4 @@
-require('babel-polyfill')
+// require('babel-polyfill')
 let a = new Promise(resolve=>resolve())
 console.log(a)
 
