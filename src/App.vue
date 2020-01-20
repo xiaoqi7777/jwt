@@ -1,7 +1,8 @@
 
 <template>
 <div>
-  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
   
   <div class="block sg">
     <span class="demonstration">默认</span>
@@ -74,28 +75,28 @@
     },
     methods:{
       handleChangeProvince1(e){
-          let dom = document.querySelector('.el-picker-panel')
-        if(dom){
-        //  el-date-range-picker el-popper
-        let top = e.$refs.reference.offsetTop
-          dom.style.top = top+50+'px'
-        }console.log(1)
+        //   let dom = document.querySelector('.el-picker-panel')
+        // if(dom){
+        // //  el-date-range-picker el-popper
+        // let top = e.$refs.reference.offsetTop
+        //   dom.style.top = top+50+'px'
+        // }console.log(1)
       },
       handleChangeProvince2(e){
-         let dom = document.querySelector('.el-picker-panel')
-        if(dom){
-        //  el-date-range-picker el-popper
-        let top = e.$refs.reference.offsetTop
-          dom.style.top = top+50+'px'
-        } console.log(2)
+        //  let dom = document.querySelector('.el-picker-panel')
+        // if(dom){
+        // //  el-date-range-picker el-popper
+        // let top = e.$refs.reference.offsetTop
+        //   dom.style.top = top+50+'px'
+        // } console.log(2)
       },
       handleChangeProvince3(e){
-        let dom = document.querySelector('.el-picker-panel')
-        if(dom){
-        //  el-date-range-picker el-popper
-        let top = e.$refs.reference.offsetTop
-          dom.style.top = top+50+'px'
-        }  console.log(3)
+        // let dom = document.querySelector('.el-picker-panel')
+        // if(dom){
+        // //  el-date-range-picker el-popper
+        // let top = e.$refs.reference.offsetTop
+        //   dom.style.top = top+50+'px'
+        // }  console.log(3)
       }
       // handleChangeProvince(e){
         // let dom = document.querySelector('.el-picker-panel')
