@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "dev-build": "vue-cli-service serve --mode production ",
-    "test": "vue-cli-service serve --mode test ",
-    "dist": "vue-cli-service build --target lib --name Cascader  ./src/plugins/index.js"
+    "build": "webpack",
+    "dev": "webpack-dev-server",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -30,7 +27,11 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "html-webpack-plugin": "^4.3.0",
+    "user-agent": "^1.0.4",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "eslintConfig": {
     "root": false,
