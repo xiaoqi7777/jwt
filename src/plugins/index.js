@@ -6,7 +6,6 @@ import { form, formItem, input } from './components/form'
 let _Vue = null
 export default {
   install (Vue, options) {
-    Vue.component('sg-cascader', Cascader)
     Vue.component('sg-catePicker', DatePicker)
     Vue.component('sg-cascader', Cascader)
     Vue.component('sg-input', input)

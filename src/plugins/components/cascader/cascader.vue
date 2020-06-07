@@ -55,17 +55,17 @@ export default {
       let index = 0
       while (current = stack[index++]) {
         if (current.id === id) {
-          break
+           break
         } else {
           if (current.children) {
             stack = stack.concat(current.children)
           }
         }
       }
-      // if (current) {
-          current.children = children
-          this.$emit('update:option', cloneValue)
-        // }
+      if (current) {
+        current.children = children
+        this.$emit('update:option', cloneValue)
+      }
     },
     change (item) {
       // item是当前点击的所有数据
