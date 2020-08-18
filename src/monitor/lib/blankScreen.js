@@ -1,6 +1,6 @@
 import onload from '../utils/onload'
 export function blankScreen () {
-    let wrapperElements = ['html', 'body', '#container', '.content']
+    let wrapperElements = ['html', 'body', '#container', '.content', '.div1']
     let emptyPoints = 0
     function getSelector (element) {
         if (element.id) {
@@ -23,6 +23,7 @@ export function blankScreen () {
                 window.innerWidth * i / 10, window.innerHeight / 2)
             let yElements = document.elementsFromPoint(
                 window.innerWidth / 2, window.innerHeight * i / 10)
+                console.log('xElements', xElements[0], yElements[0])
             isWrapper(xElements[0])
             isWrapper(yElements[0])
         }
@@ -38,6 +39,8 @@ export function blankScreen () {
               viewPoint: window.innerWidth + 'X' + window.innerHeight,
               selector: getSelector(centerElements[0])
             }
+        console.log('123==>', log)
+        console.log('==>', document.elementFromPoint(400, 400))
         }
     })
 }

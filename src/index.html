@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>前端监控sdk</title>
+  <style>
+    .content{
+      width: 900px;
+      height: 900px;
+      background: red;
+    }
+    .div1{
+      width: 900px;
+      height: 800px;
+      background: green;
+    }
+  </style>
 </head>
 <body>
   <div id="container">
@@ -14,6 +26,7 @@
       <!-- 请求发送 -->
       <input type="button" id="successBtn" value="ajax成功请求" onclick="sendSuccess()">
       <input type="button" id="errorBtn" value="ajax成功失败" onclick="sendError()">
+      <div class="div1"></div>
     </div>
   </div>
   <script>
